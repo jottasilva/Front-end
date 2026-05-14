@@ -81,7 +81,7 @@ export interface RoomPayload {
   imageUrl: string;
 }
 
-export type ReservationStatus = "confirmed" | "pending";
+export type ReservationStatus = "confirmed" | "pending" | "expired";
 
 export interface Reservation {
   id: string;

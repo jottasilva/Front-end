@@ -31,7 +31,12 @@ export function ReservationCard({
   onDelete,
   onEdit,
 }: ReservationCardProps) {
-  const statusLabel = reservation.status === "confirmed" ? "Confirmada" : "Pendente";
+  const statusLabelByStatus = {
+    confirmed: "Confirmada",
+    pending: "Pendente",
+    expired: "Vencida",
+  };
+  const statusLabel = statusLabelByStatus[reservation.status];
 
   return (
     <article className="reservation-card">

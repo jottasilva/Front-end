@@ -71,7 +71,7 @@ const demoReservations: Reservation[] = [
     endTime: "2026-05-23T11:00:00.000Z",
     coffeeService: false,
     attendeesCount: 8,
-    status: "confirmed",
+    status: new Date("2026-05-23T11:00:00.000Z") < new Date() ? "expired" : "confirmed",
   },
   {
     id: "res-2",
@@ -86,7 +86,7 @@ const demoReservations: Reservation[] = [
     endTime: "2026-05-23T15:30:00.000Z",
     coffeeService: true,
     attendeesCount: 12,
-    status: "confirmed",
+    status: new Date("2026-05-23T15:30:00.000Z") < new Date() ? "expired" : "confirmed",
   },
   {
     id: "res-3",
@@ -101,7 +101,7 @@ const demoReservations: Reservation[] = [
     endTime: "2026-05-24T10:00:00.000Z",
     coffeeService: false,
     attendeesCount: 6,
-    status: "pending",
+    status: new Date("2026-05-24T10:00:00.000Z") < new Date() ? "expired" : "pending",
   },
 ];
 

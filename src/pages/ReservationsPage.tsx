@@ -15,6 +15,7 @@ import {
   Home,
   LogOut,
   MapPin,
+  Menu,
   Pencil,
   Plus,
   Search,
@@ -22,6 +23,7 @@ import {
   Star,
   Trash2,
   Users,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { UserManagementPanel } from "../features/auth/components/UserManagementPanel";
@@ -233,7 +235,8 @@ function sortedEntries(record: Record<string, number>) {
 function groupReservationsByDate(reservations: Reservation[]) {
   return reservations.reduce<Record<string, Reservation[]>>((groups, reservation) => {
     const dateKey = toLocalDateKey(reservation.startTime);
-    groups[dateKey] = [...(groups[dateKey] ?? []), reservation];
+    const existingReservations = groups[dateKey] ?? [];
+    groups[dateKey] = [...existingReservations, reservation];
     return groups;
   }, {});
 }
@@ -287,6 +290,7 @@ export function ReservationsPage() {
   const [searchMinCapacity, setSearchMinCapacity] = useState("");
   const [hasActiveRoomSearch, setHasActiveRoomSearch] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const isAdmin = user?.role === "admin";
   const userPermissions = useMemo(() => new Set(user?.permissions ?? []), [user?.permissions]);
@@ -447,10 +451,12 @@ export function ReservationsPage() {
   function handleMenuClick(menu: MenuKey) {
     if (!canAccessMenu(menu)) {
       setActiveMenu("inicio");
+      setIsMobileMenuOpen(false);
       return;
     }
 
     setSelectedIds([]);
+    setIsMobileMenuOpen(false);
     if (menu === "reservar") {
       setActiveMenu("minhas");
       openCreateForm();
@@ -997,7 +1003,18 @@ export function ReservationsPage() {
 
   return (
     <div className="dashboard-shell">
-      <aside className="sidebar">
+      <div
+        className={`mobile-sidebar-overlay ${isMobileMenuOpen ? "open" : ""}`}
+        aria-hidden="true"
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+      <aside className={`sidebar ${isMobileMenuOpen ? "open" : ""}`}>
+        <div className="sidebar-mobile-header">
+          <img className="mobile-drawer-logo" src={bananaLogo} alt="Logo" />
+          <button className="icon-button" type="button" onClick={() => setIsMobileMenuOpen(false)} aria-label="Fechar menu">
+            <X size={20} />
+          </button>
+        </div>
         <nav className="sidebar-nav" aria-label="Navegacao principal">
           {visibleNavItems.map((item) => {
             const Icon = item.icon;
@@ -1020,16 +1037,21 @@ export function ReservationsPage() {
           <button type="button">Abrir Suporte</button>
         </div>
 
-        <div className="sidebar-footer">
-          <img className="footer-logo" src={bananaLogo} alt="" />
-        </div>
       </aside>
 
       <main className="dashboard-main">
         <header className="topbar">
-          <div>
-            <h2>Ola, {firstName(user?.name)}!</h2>
-            <p>Bem-vinda ao sistema de reservas de reunioes.</p>
+          <div className="topbar-heading">
+            <button
+              className="hamburger-button"
+              type="button"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Abrir menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              <Menu size={22} />
+            </button>
+            <img className="topbar-logo" src={bananaLogo} alt="Logo" />
           </div>
 
           <div className="topbar-actions">
@@ -1070,7 +1092,7 @@ export function ReservationsPage() {
                             {reservation.roomName} • {reservation.locationName} • Responsavel: {reservation.responsibleName}
                           </small>
                           <span className={`notification-status ${reservation.status}`}>
-                            {reservation.status === "confirmed" ? "Confirmada" : "Pendente"}
+                            {reservation.status === "expired" ? "Vencida" : reservation.status === "confirmed" ? "Confirmada" : "Pendente"}
                           </span>
                         </button>
                       ))}

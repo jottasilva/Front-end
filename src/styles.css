@@ -60,6 +60,10 @@ a {
   background: var(--bg);
 }
 
+.mobile-sidebar-overlay {
+  display: none;
+}
+
 .sidebar {
   width: 270px;
   flex: 0 0 270px;
@@ -73,12 +77,17 @@ a {
     var(--sidebar);
 }
 
+.sidebar-mobile-header {
+  display: none;
+}
+
 .logo-icon,
 .brand-mark {
   display: grid;
   place-items: center;
   width: 34px;
-  height: 34px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   color: white;
   background: var(--primary);
   border-radius: 8px;
@@ -126,7 +135,8 @@ a {
   display: grid;
   place-items: center;
   width: 42px;
-  height: 42px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   color: white;
   background: var(--primary);
   border-radius: 50%;
@@ -199,6 +209,26 @@ a {
   padding: 30px 38px 22px;
 }
 
+.topbar-heading {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 18px;
+}
+
+.hamburger-button {
+  display: none;
+}
+
+.topbar-logo,
+.mobile-drawer-logo {
+  display: block;
+  width: clamp(96px, 12vw, 142px);
+  height: auto;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
 .topbar h2 {
   margin: 0;
   font-size: 30px;
@@ -226,7 +256,9 @@ a {
   display: grid;
   place-items: center;
   width: 38px;
-  height: 38px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  flex: 0 0 auto;
   color: #475569;
   border: 0;
   border-radius: 10px;
@@ -254,7 +286,8 @@ a {
   right: -6px;
   display: grid;
   min-width: 20px;
-  height: 20px;
+  min-height: 20px;
+  aspect-ratio: 1 / 1;
   padding: 0 5px;
   place-items: center;
   border: 2px solid var(--bg);
@@ -390,6 +423,11 @@ a {
   background: #ffedd5;
 }
 
+.notification-status.expired {
+  color: #475569;
+  background: #e2e8f0;
+}
+
 .notification-empty {
   display: grid;
   justify-items: center;
@@ -500,7 +538,8 @@ a {
   display: grid;
   place-items: center;
   width: 26px;
-  height: 26px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   color: #64748b;
   border: 0;
   border-radius: 999px;
@@ -526,7 +565,9 @@ a {
 
 .profile-chip img {
   width: 44px;
-  height: 44px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  flex: 0 0 auto;
   object-fit: cover;
   border: 1px solid var(--line);
   border-radius: 50%;
@@ -536,7 +577,9 @@ a {
   display: grid !important;
   place-items: center;
   width: 44px;
-  height: 44px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  flex: 0 0 auto;
   color: white !important;
   font-weight: 800;
   text-transform: uppercase;
@@ -755,7 +798,9 @@ a {
 
 .stat-card svg {
   width: 42px;
-  height: 42px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
   padding: 10px;
   border-radius: 12px;
 }
@@ -897,7 +942,8 @@ a {
 
 .row-checkbox input {
   width: 18px;
-  height: 18px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   accent-color: var(--primary);
 }
 
@@ -905,7 +951,9 @@ a {
   display: grid;
   place-items: center;
   width: 54px;
-  height: 54px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  flex: 0 0 auto;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: #f8fafc;
@@ -958,7 +1006,8 @@ a {
 
 .dot {
   width: 4px;
-  height: 4px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   background: #94a3b8;
 }
@@ -967,7 +1016,8 @@ a {
   display: inline-grid;
   place-items: center;
   width: 24px;
-  height: 24px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   color: #92400e;
   border: 1px solid #fde68a;
   border-radius: 999px;
@@ -995,6 +1045,11 @@ a {
 .status-pill.pending {
   color: var(--warning);
   background: #fef3c7;
+}
+
+.status-pill.expired {
+  color: #475569;
+  background: #e2e8f0;
 }
 
 .danger-icon:hover {
@@ -1133,7 +1188,8 @@ a {
   display: grid;
   place-items: center;
   width: 48px;
-  height: 48px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   color: var(--primary);
   border-radius: 14px;
   background: #dbeafe;
@@ -1239,7 +1295,8 @@ a {
   display: grid;
   place-items: center;
   width: 68px;
-  height: 68px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   color: white;
   font-size: 28px;
   font-weight: 800;
@@ -1291,7 +1348,8 @@ a {
   display: grid;
   place-items: center;
   width: 44px;
-  height: 44px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   color: var(--primary);
   border-radius: 14px;
   background: #dbeafe;
@@ -1374,7 +1432,8 @@ a {
   display: grid;
   place-items: center;
   width: 142px;
-  height: 142px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   color: white;
   font-size: 48px;
   font-weight: 800;
@@ -1525,7 +1584,8 @@ a {
 .user-avatar-mini img,
 .user-avatar-mini span {
   width: 42px;
-  height: 42px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   flex: 0 0 42px;
   border-radius: 50%;
 }
@@ -1594,7 +1654,8 @@ a {
 
 .permission-pill input {
   width: 15px;
-  height: 15px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   accent-color: var(--primary);
 }
 
@@ -1617,7 +1678,8 @@ a {
 .user-avatar-editor img,
 .user-avatar-editor > span {
   width: 82px;
-  height: 82px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   flex: 0 0 82px;
   border-radius: 22px;
 }
@@ -1759,7 +1821,8 @@ a {
 
 .featured-room small span {
   width: 7px;
-  height: 7px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
 }
 
@@ -1837,7 +1900,10 @@ a {
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 34px;
+  width: min(100%, 34px);
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  justify-self: center;
   color: var(--text);
   border: 0;
   border-radius: 50%;
@@ -1864,7 +1930,8 @@ a {
   bottom: 3px;
   left: 50%;
   width: 4px;
-  height: 4px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   background: var(--primary);
   transform: translateX(-50%);
@@ -1875,8 +1942,9 @@ a {
 }
 
 .calendar-picker-grid button {
-  min-height: 42px;
-  border-radius: 12px;
+  width: min(100%, 42px);
+  min-height: 0;
+  border-radius: 50%;
 }
 
 .mini-calendar button.active.marked::after {
@@ -1948,7 +2016,8 @@ a {
   display: grid;
   place-items: center;
   width: 44px;
-  height: 44px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   color: var(--warning);
   border-radius: 12px;
   background: #fef3c7;
@@ -2193,19 +2262,47 @@ textarea::placeholder {
     overflow: auto;
   }
 
+  .mobile-sidebar-overlay.open {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: block;
+    background: rgb(15 23 42 / 52%);
+    backdrop-filter: blur(4px);
+  }
+
   .sidebar {
-    width: 100%;
-    height: auto;
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 80;
+    width: min(84vw, 320px);
+    height: 100vh;
     min-height: 0;
     padding: 18px;
+    transform: translateX(-104%);
+    transition: transform 0.24s ease;
+    box-shadow: 24px 0 54px rgb(15 23 42 / 24%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgb(255 255 255 / 8%);
   }
 
   .sidebar-nav {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
-  .support-box,
-  .sidebar-footer {
+  .support-box {
     display: none;
   }
 
@@ -2217,6 +2314,24 @@ textarea::placeholder {
   .topbar {
     align-items: flex-start;
     padding: 24px 20px;
+  }
+
+  .hamburger-button {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    flex: 0 0 auto;
+    color: #1e293b;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 10px 24px rgb(15 23 42 / 8%);
+  }
+
+  .topbar-logo {
+    width: clamp(94px, 26vw, 128px);
   }
 
   .profile-chip div,
@@ -2259,6 +2374,23 @@ textarea::placeholder {
 @media (max-width: 640px) {
   .topbar {
     display: grid;
+    gap: 18px;
+  }
+
+  .topbar-heading {
+    display: grid;
+    grid-template-columns: 42px minmax(78px, 108px);
+    width: 100%;
+    gap: 12px;
+  }
+
+  .topbar h2 {
+    font-size: 23px;
+  }
+
+  .topbar p {
+    margin-top: 6px;
+    font-size: 13px;
   }
 
   .topbar-actions {
@@ -2297,6 +2429,34 @@ textarea::placeholder {
   .coffee-row,
   .auth-page {
     grid-template-columns: 1fr;
+  }
+
+  .panel-title-row,
+  .calendar-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .primary-button,
+  .secondary-button,
+  .danger-button,
+  .ghost-button {
+    width: 100%;
+  }
+
+  .room-card {
+    grid-template-columns: 1fr;
+  }
+
+  .room-card img,
+  .featured-room img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  .featured-room {
+    display: grid;
   }
 
   .auth-visual {
