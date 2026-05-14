@@ -298,6 +298,23 @@ export function useReservations() {
     }
   }
 
+  async function deleteRoom(id: string) {
+    setError("");
+    try {
+      await bookingApi.delete(`/api/v1/rooms/${id}`);
+      setRooms((current) => current.filter((room) => room.id !== id));
+    } catch (requestError) {
+      if (shouldUseDemoData()) {
+        if (reservations.some((reservation) => reservation.roomId === id)) {
+          throw new Error("Nao e possivel excluir uma sala com reservas vinculadas.");
+        }
+        setRooms((current) => current.filter((room) => room.id !== id));
+        return;
+      }
+      throw new Error(getProblemMessage(requestError, "Nao foi possivel excluir a sala."));
+    }
+  }
+
   async function createLocation(payload: LocationPayload) {
     setError("");
     try {
@@ -379,6 +396,7 @@ export function useReservations() {
     bulkDeleteReservations,
     createRoom,
     updateRoom,
+    deleteRoom,
     createLocation,
     updateLocation,
     deleteLocation,

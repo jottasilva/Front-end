@@ -267,6 +267,7 @@ export function ReservationsPage() {
     bulkDeleteReservations,
     createRoom,
     updateRoom,
+    deleteRoom,
     createLocation,
     updateLocation,
     deleteLocation,
@@ -281,6 +282,7 @@ export function ReservationsPage() {
   const [reservationFormDefaultDate, setReservationFormDefaultDate] = useState("");
   const [isRoomFormOpen, setIsRoomFormOpen] = useState(false);
   const [editingRoom, setEditingRoom] = useState<Room | null>(null);
+  const [roomToDelete, setRoomToDelete] = useState<Room | null>(null);
   const [roomsTab, setRoomsTab] = useState<RoomsTab>("salas");
   const [isLocationFormOpen, setIsLocationFormOpen] = useState(false);
   const [editingLocation, setEditingLocation] = useState<Location | null>(null);
@@ -536,6 +538,21 @@ export function ReservationsPage() {
     }
   }
 
+  async function confirmRoomDelete() {
+    if (!roomToDelete) {
+      return;
+    }
+
+    try {
+      await deleteRoom(roomToDelete.id);
+      toast.success("Sala excluida", "A sala foi removida com sucesso.");
+      setRoomToDelete(null);
+    } catch (deleteError) {
+      toast.error("Sala nao excluida", deleteError instanceof Error ? deleteError.message : "Nao foi possivel excluir a sala.");
+      setRoomToDelete(null);
+    }
+  }
+
   function renderReservationsPanel(items: Reservation[], menu: MenuKey) {
     const info = panelInfo(menu);
     return (
@@ -754,33 +771,48 @@ export function ReservationsPage() {
               </div>
             )}
             <div className="room-grid">
-              {roomsToShow.map((room) => (
-                <article className="room-card" key={room.id}>
-                  <img alt={room.name} src={room.imageUrl} />
-                  <div>
-                    <h4>{room.name}</h4>
-                    <p>
-                      <MapPin size={14} />
-                      {room.locationName}
-                    </p>
-                    <p>
-                      <Users size={14} />
-                      {room.capacity} pessoas
-                    </p>
-                    <small className={room.available ? "available" : "busy"}>{room.available ? "Disponivel" : `Em uso ate ${room.availableUntil}`}</small>
-                    <div className="room-card-actions">
-                      <button className="secondary-button compact" type="button" onClick={() => openEditRoomForm(room)}>
-                        <Pencil size={16} />
-                        Editar
-                      </button>
-                      <button className="primary-button compact" type="button" onClick={() => openCreateForm(filterDate)}>
-                        <CalendarPlus size={16} />
-                        Reservar
-                      </button>
+              {roomsToShow.map((room) => {
+                const reservationCount = roomReservationCounts[room.id] ?? 0;
+
+                return (
+                  <article className="room-card" key={room.id}>
+                    <img alt={room.name} src={room.imageUrl} />
+                    <div>
+                      <h4>{room.name}</h4>
+                      <p>
+                        <MapPin size={14} />
+                        {room.locationName}
+                      </p>
+                      <p>
+                        <Users size={14} />
+                        {room.capacity} pessoas
+                      </p>
+                      <small className={room.available ? "available" : "busy"}>{room.available ? "Disponivel" : `Em uso ate ${room.availableUntil}`}</small>
+                      <div className="room-card-actions">
+                        <button className="secondary-button compact" type="button" onClick={() => openEditRoomForm(room)}>
+                          <Pencil size={16} />
+                          Editar
+                        </button>
+                        <button
+                          className="danger-button compact"
+                          type="button"
+                          disabled={reservationCount > 0}
+                          title={reservationCount > 0 ? "Remova as reservas desta sala antes de excluir" : undefined}
+                          onClick={() => setRoomToDelete(room)}
+                        >
+                          <Trash2 size={16} />
+                          Excluir
+                        </button>
+                        <button className="primary-button compact" type="button" onClick={() => openCreateForm(filterDate)}>
+                          <CalendarPlus size={16} />
+                          Reservar
+                        </button>
+                      </div>
+                      {reservationCount > 0 && <small className="unit-lock">Sala em uso por reservas cadastradas.</small>}
                     </div>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                );
+              })}
             </div>
             {roomsToShow.length === 0 && (
               <p className="empty-state">Nenhuma sala atende data, horario e capacidade selecionados.</p>
@@ -1257,6 +1289,15 @@ export function ReservationsPage() {
         confirmLabel="Excluir unidade"
         onCancel={() => setLocationToDelete(null)}
         onConfirm={() => void confirmLocationDelete()}
+      />
+
+      <ConfirmModal
+        isOpen={Boolean(roomToDelete)}
+        title="Excluir sala"
+        message={`Confirma a exclusao da sala ${roomToDelete?.name ?? ""}?`}
+        confirmLabel="Excluir sala"
+        onCancel={() => setRoomToDelete(null)}
+        onConfirm={() => void confirmRoomDelete()}
       />
     </div>
   );
